@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4
 jobs:
   build:
     docker:
@@ -22,6 +23,18 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: ying321pyt/education-space
+          tag: 0.1.0
+      - docker/push:
+          image: ying321pyt/education-space
+          tag: 0.1.0
 
 workflows:
   simple_workflow:
