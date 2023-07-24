@@ -43,3 +43,9 @@ workflows:
       - test:
           requires:
             - build
+- build-and-push:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build-and-push
